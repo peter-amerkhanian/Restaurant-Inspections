@@ -1,9 +1,9 @@
 import json
-import requests
+from typing import Optional, Tuple
+
+import numpy as np
 import pandas as pd
 import requests
-import numpy as np
-from typing import Optional, Tuple
 from geopy.point import Point
 
 url = "https://data.acgov.org/resource/3d5b-2rnz.json"
@@ -20,3 +20,9 @@ def get_lat_long(df: pd.DataFrame) -> list:
     lat = df['location_1'].apply(lambda x: x.get('latitude'))
     long = df['location_1'].apply(lambda x: x.get('longitude'))
     return [Point(x, y) if (x and y) else None for x, y in zip(lat, long)]
+
+
+def get_city(df: pd.DataFrame) -> pd.Series:
+    """Get the city of a restaurant from its address"""
+    cities = df['address'].apply(lambda x: x.split(', ')[0].split()[-1])
+    return cities.apply(lambda x: x.replace("CITY", "UNION CITY").replace("LEANDRO", "SAN LEANDRO"))
