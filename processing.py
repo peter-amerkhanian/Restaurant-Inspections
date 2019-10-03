@@ -56,6 +56,7 @@ def gen_integrated_coordinates(coords: Iterator[Optional[Point]], df: pd.DataFra
 
 
 def build_integrated_coordinate_series(df: pd.DataFrame) -> pd.Series:
+    """Runs gen_coordinates() then gen_integrated_coordinates()"""
     print("Running coordinate retrieval.")
     coordinates = gen_coordinates(df)
     integrated_coordinates = gen_integrated_coordinates(coordinates, df)
