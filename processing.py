@@ -1,4 +1,4 @@
-from typing import Any, Dict, Iterator, List, Optional
+from typing import Dict, Iterator, List, Optional
 
 import geopy
 import pandas as pd
@@ -14,10 +14,12 @@ def call_geopy_api(address: Dict[str, str]) -> Optional[geopy.location.Location]
         coordinates = gn.geocode(address)
         return coordinates
     except geopy.exc.GeocoderTimedOut:
-        print(f"No Coordinates Found For: {address['street']} {address['city']}")
+        print(
+            f"No Coordinates Found For: {address['street']} {address['city']}")
         return None
     except geopy.exc.GeocoderServiceError:
-        print(f"No Coordinates Found For: {address['street']} {address['city']}")
+        print(
+            f"No Coordinates Found For: {address['street']} {address['city']}")
         return None
 
 
