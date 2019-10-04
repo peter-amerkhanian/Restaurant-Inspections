@@ -4,8 +4,8 @@ import pandas as pd
 from retrieval import get_city, get_lat_long, json_to_df, url
 from processing import gen_coordinates, gen_integrated_coordinates, build_integrated_coordinate_series
 
-def main():
-    df = json_to_df(url)
+def main() -> None:
+    df: pd.DataFrame = json_to_df(url)
     # initial changes to the df
     df['activity_date'] = df['activity_date'].apply(
         lambda x: datetime.strptime(x.split('T')[0], "%Y-%m-%d"))
@@ -14,14 +14,14 @@ def main():
     df['address'] = df['address'].apply(lambda x: x.upper())
     df['city'] = get_city(df)
     # filling in longitude and latitude for each restaurant
-    nans = len(df.index)
-    count = 0
+    nans: int = len(df.index)
+    count: int = 0
     while True:
         count += 1
         print("Round {}".format(count))
-        coord_series = build_integrated_coordinate_series(df)
+        coord_series: pd.Series = build_integrated_coordinate_series(df)
         df['point'] = pd.Series(gen_integrated_coordinates(coord_series, df))
-        new_nans = coord_series.isna().sum()
+        new_nans: int = coord_series.isna().sum()
         if new_nans == nans:
             break
         else:
