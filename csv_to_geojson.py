@@ -1,4 +1,3 @@
-#%%
 import os
 import pandas as pd
 from geopy.point import Point
@@ -30,4 +29,4 @@ else:
     print("You don't have the restaurant data loaded. Please use 'run.py' to create a csv of the data.")
 
 
-#%%
+
