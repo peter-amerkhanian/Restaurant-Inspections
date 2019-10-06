@@ -28,7 +28,7 @@ def main() -> None:
             nans = new_nans
         print("\n")
     print("Dataframe updated. {} NaN values in the Points columns.".format(nans))
-    df.to_csv("restaurant_inspections_2012_2019.csv")
+    df.to_csv("data/restaurant_inspections_2012_2019.csv")
 
 if __name__ == "__main__":
     main()
