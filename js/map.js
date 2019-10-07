@@ -7,12 +7,22 @@ function baseLayer() {
 }
 
 function geojsonLayer() {
+	var myStyle = {
+		"color": "#7135ff",
+		"weight": 2,
+		"opacity": 1,
+		"radius": 4
+	};
 	var geojsonLayer = new L.GeoJSON.AJAX("data/restaurant_map.geojson",
 		{
+			pointToLayer: function (geoJsonPoint, latlng) {
+				return L.circleMarker(latlng, myStyle);
+			},
 			onEachFeature: function (feature, layer) {
 				layer.bindPopup("<b>" + feature.properties.name + "</b><br/>" + feature.properties.inspection_date);
 			}
 		});
+	geojsonLayer.style = myStyle;
 	return geojsonLayer;
 }
 
