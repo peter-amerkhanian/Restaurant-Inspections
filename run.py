@@ -6,6 +6,7 @@ from processing import gen_coordinates, gen_integrated_coordinates, build_integr
 
 def main() -> None:
     df: pd.DataFrame = json_to_df(url)
+    df = df.head(100) # testing
     # initial changes to the df
     df['activity_date'] = df['activity_date'].apply(
         lambda x: datetime.strptime(x.split('T')[0], "%Y-%m-%d"))
@@ -28,7 +29,7 @@ def main() -> None:
             nans = new_nans
         print("\n")
     print("Dataframe updated. {} NaN values in the Points columns.".format(nans))
-    df.to_csv("data/restaurant_inspections_2012_2019.csv")
+    # df.to_csv("data/restaurant_inspections_2012_2019.csv")
 
 if __name__ == "__main__":
     main()

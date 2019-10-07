@@ -8,18 +8,37 @@ function baseLayer() {
 
 function geojsonLayer() {
 	var myStyle = {
-		"color": "#7135ff",
-		"weight": 2,
+		"fillColor": "#e1f000",
+		"color": "#000000",
+		"weight": 1,
 		"opacity": 1,
-		"radius": 4
+		"radius": 7,
+		"fill": true,
+		"fillOpacity": 1
 	};
 	var geojsonLayer = new L.GeoJSON.AJAX("data/restaurant_map.geojson",
 		{
 			pointToLayer: function (geoJsonPoint, latlng) {
 				return L.circleMarker(latlng, myStyle);
 			},
+			style: function (feature) {
+				if (feature.properties.grade == "g") {
+					return {
+						fillColor: "#05ad00"
+					};
+				}
+				if (feature.properties.grade == "r") {
+					return {
+						fillColor: "#d90000"
+					};
+				}
+			},
 			onEachFeature: function (feature, layer) {
-				layer.bindPopup("<b>" + feature.properties.name + "</b><br/>" + feature.properties.inspection_date);
+				layer.bindPopup(`
+				<b>${feature.properties.name}</b><br/>
+				${feature.properties.inspection_date}<br/>
+				Grade: ${feature.properties.grade}
+				`);
 			}
 		});
 	geojsonLayer.style = myStyle;

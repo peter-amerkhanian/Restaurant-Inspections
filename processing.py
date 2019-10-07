@@ -11,7 +11,14 @@ gn = geopy.geocoders.Nominatim()
 def call_geopy_api(address: Dict[str, str]) -> Optional[geopy.location.Location]:
     """Utility: Returns the longitude and latitude of a given site"""
     try:
-        coordinates = gn.geocode(address)
+        coordinates: geopy.location.Location = gn.geocode(address)
+        if coordinates:
+            if coordinates.latitude > 38 or coordinates.latitude < 37:
+                print(f"Latitiude outside of target area: ({coordinates.point.latitude}, {coordinates.point.longitude})")
+                return None
+            if coordinates.longitude > -121 or coordinates.longitude < -123:
+                print(f"Longitude outside of target area: ({coordinates.point.latitude}, {coordinates.point.longitude})")
+                return None
         return coordinates
     except geopy.exc.GeocoderTimedOut:
         print(
@@ -31,15 +38,15 @@ def gen_coordinates(df: pd.DataFrame) -> Iterator[Optional[Point]]:
         if row['point']:
             yield None
         else:
-            x = row['address'].split(f"{row['city']}, ")
-            street = x[0]
-            city = row['city']
-            state = x[1].split()[0]
-            postalcode = x[1].split()[1]
-            coord = call_geopy_api({'street': street,
-                                    'city': city,
-                                    'state': state,
-                                    'postalcode': postalcode})
+            x: List[str] = row['address'].split(f"{row['city']}, ")
+            street: str = x[0]
+            city: str = row['city']
+            state: str = x[1].split()[0]
+            postalcode: str = x[1].split()[1]
+            coord: geopy.location.Location = call_geopy_api({'street': street,
+                                                             'city': city,
+                                                             'state': state,
+                                                             'postalcode': postalcode})
             if coord:
                 yield coord.point
             else:

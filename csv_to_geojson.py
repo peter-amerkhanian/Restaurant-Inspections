@@ -12,10 +12,12 @@ map_file: str = "data/restaurant_map.geojson"
 def build_a_feature(df: pd.DataFrame) -> Iterator[geojson.Feature]:
     """Yield a geojson feature for each row in the given df"""
     for x in df.itertuples():
+        print((x.point.longitude, x.point.latitude))
         geometry = geojson.Point((x.point.longitude, x.point.latitude))
         yield geojson.Feature(geometry=geometry,
                               properties={'name': x.facility_name,
-                                          'inspection_date': x.activity_date})
+                                          'inspection_date': x.activity_date,
+                                          'grade': x.resource_code if x.resource_code else " "})
 
 
 if os.path.exists(csv_file):
@@ -24,6 +26,7 @@ if os.path.exists(csv_file):
             inplace=True)
     df['point'] = df['point'].apply(
         lambda x: Point(0, 0) if type(x) == float else Point(x))
+    df.fillna('', inplace=True)
     features: Iterator[geojson.Feature] = build_a_feature(df)
     feature_collection: geojson.FeatureCollection = geojson.FeatureCollection(list(features))
     with open(map_file, 'w', encoding='utf8') as f:
