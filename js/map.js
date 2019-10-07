@@ -3,7 +3,17 @@ var map;
 function baseLayer() {
 	var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	var osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	return new L.TileLayer(osmUrl, {maxZoom: 12, attribution: osmAttrib });
+	return new L.TileLayer(osmUrl, { attribution: osmAttrib });
+}
+
+function geojsonLayer() {
+	var geojsonLayer = new L.GeoJSON.AJAX("data/restaurant_map.geojson",
+		{
+			onEachFeature: function (feature, layer) {
+				layer.bindPopup("<b>" + feature.properties.name + "</b><br/>" + feature.properties.inspection_date);
+			}
+		});
+	return geojsonLayer;
 }
 
 
@@ -15,8 +25,9 @@ function initmap() {
 	// create the OSM tile
 	var osm = baseLayer();
 	osm.addTo(map);
-	var geojsonLayer = new L.GeoJSON.AJAX("data/restaurant_map.geojson");
-	geojsonLayer.addTo(map);
+	// create the markers tile
+	var gjLayer = geojsonLayer();
+	gjLayer.addTo(map);
 
 }
 initmap();
