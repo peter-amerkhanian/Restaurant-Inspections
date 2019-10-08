@@ -4,3 +4,8 @@ __pycache__/
 cali_data_venv/
 data/restaurant_inspections_2012_2019.csv
 data/restaurant_map.geojson
+node_modules
+js/.eslintrc.js
+js/practice.ts
+tsconfig.json
+package.json
