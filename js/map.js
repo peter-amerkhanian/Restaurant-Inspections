@@ -1,6 +1,5 @@
 const L = window.L
 
-
 /**
  * Builds the OSM base layer for the map
  *
@@ -13,10 +12,10 @@ function baseLayer() {
 }
 
 /**
+ *Sets the color of a feature according to its grade
  *
- *
- * @param {*} feature 
- * @returns
+ * @param {*} feature a geojson feature
+ * @returns a dictionary with a fillColor key and an html color code
  */
 function setColor(feature) {
 	if (feature.properties.grade == "g") {
@@ -39,9 +38,9 @@ function setColor(feature) {
 }
 
 /**
- * Creates the marker layer with restaurant data
+ * Creates the marker layer with restaurant data markers
  *
- * @returns L.GeoJSON
+ * @returns an L.GeoJSON object with all the restaurant locations
  */
 function geojsonLayer() {
 	const baseStyle = {
@@ -72,6 +71,10 @@ function geojsonLayer() {
 }
 
 
+/**
+ * Initializes the map with the base layer and the restaurants
+ *
+ */
 function initmap() {
 	// set up the map
 	const map = new L.Map('map');
@@ -83,6 +86,6 @@ function initmap() {
 	// create the markers tile
 	const gjLayer = geojsonLayer();
 	gjLayer.addTo(map);
-
 }
+
 initmap();
