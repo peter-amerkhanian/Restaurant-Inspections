@@ -19,8 +19,8 @@ def build_a_feature(df: pd.DataFrame) -> Iterator[geojson.Feature]:
                                           'inspection_date': x.activity_date,
                                           'grade': x.resource_code if x.resource_code else " "})
 
-
-if os.path.exists(csv_file):
+def to_geojson() -> None:
+    """Converts the csv file of restaurant data into a geojson file"""
     df: pd.DataFrame = pd.read_csv(csv_file)
     df.drop(columns=[':@computed_region_q3a8_eiwf', 'Unnamed: 0', 'location_1'],
             inplace=True)
@@ -31,9 +31,7 @@ if os.path.exists(csv_file):
     feature_collection: geojson.FeatureCollection = geojson.FeatureCollection(list(features))
     with open(map_file, 'w', encoding='utf8') as f:
         geojson.dump(feature_collection,
-                     f,
-                     sort_keys=True,
-                     ensure_ascii=False)
+                    f,
+                    sort_keys=True,
+                    ensure_ascii=False)
     print("geojson file created successfully.")
-else:
-    print("You don't have the restaurant data loaded. Please use 'run.py' to create a csv of the data.")
