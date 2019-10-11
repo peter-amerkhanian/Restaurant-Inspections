@@ -25,7 +25,8 @@ def to_geojson() -> None:
     df.drop(columns=[':@computed_region_q3a8_eiwf', 'Unnamed: 0', 'location_1'],
             inplace=True)
     df['point'] = df['point'].apply(
-        lambda x: Point(0, 0) if type(x) == float else Point(x))
+        lambda x: None if type(x) == float else Point(x))
+    df.dropna(subset=['point'], inplace=True)
     df.fillna('', inplace=True)
     features: Iterator[geojson.Feature] = build_a_feature(df)
     feature_collection: geojson.FeatureCollection = geojson.FeatureCollection(list(features))
