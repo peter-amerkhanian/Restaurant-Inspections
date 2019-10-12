@@ -13,13 +13,16 @@ def call_geopy_api(address: Dict[str, str]) -> Optional[geopy.location.Location]
     try:
         coordinates: geopy.location.Location = gn.geocode(address)
         if coordinates:
-            if coordinates.latitude > 38 or coordinates.latitude < 37:
-                print(f"Latitiude outside of target area: ({coordinates.point.latitude}, {coordinates.point.longitude})")
+            if coordinates.point.latitude < 37 or coordinates.point.latitude > 38:
+                print(f"{address['street']}, {address['city']}. Latitiude outside of target area:" +
+                f" ({coordinates.point.longitude}, {coordinates.point.latitude})")
                 return None
-            if coordinates.longitude > -121 or coordinates.longitude < -123:
-                print(f"Longitude outside of target area: ({coordinates.point.latitude}, {coordinates.point.longitude})")
+            if int(coordinates.point.longitude) > -121 or int(coordinates.point.longitude) < -123:
+                print(f"{address['street']}, {address['city']}. Longitude outside of target area:" +
+                f" ({coordinates.point.longitude}, {coordinates.point.latitude})")
                 return None
-        return coordinates
+            return coordinates
+        return None
     except geopy.exc.GeocoderTimedOut:
         print(
             f"No Coordinates Found For: {address['street']} {address['city']}")

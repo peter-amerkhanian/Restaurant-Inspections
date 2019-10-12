@@ -18,7 +18,8 @@ def get_lat_long(df: pd.DataFrame) -> list:
     """If the restaurant already has lat/long, get that data"""
     lat: pd.Series = df['location_1'].apply(lambda x: x.get('latitude'))
     long: pd.Series = df['location_1'].apply(lambda x: x.get('longitude'))
-    return [Point(x, y) if (x and y) else None for x, y in zip(lat, long)]
+    return [None if (x and y) else None for x, y in zip(lat, long)] # testing
+    # return [Point(x, y) if (x and y) else None for x, y in zip(lat, long)]
 
 
 def get_city(df: pd.DataFrame) -> pd.Series:
