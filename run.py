@@ -1,6 +1,11 @@
 from data_pipeline import to_geojson, to_csv, csv_file
 import os
 
+"""
+TODO: Right now, the incorrect coords supplied by AC are removed.
+These should instead be re-searched by the Open Map API
+"""
+
 if os.path.exists(csv_file):
     to_geojson()
 else:
