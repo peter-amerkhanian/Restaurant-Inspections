@@ -6,7 +6,7 @@ TODO: Right now, the incorrect coords supplied by AC are removed.
 These should instead be re-searched by the Open Map API
 """
 
-if os.path.exists(csv_file):
+if os.path.exists('csv_file'):
     to_geojson()
 else:
     print("You don't have the restaurant data loaded. Do you want to load data now?")

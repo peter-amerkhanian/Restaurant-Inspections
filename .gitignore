@@ -2,12 +2,11 @@
 # py caches
 .mypy_cache/
 __pycache__/
-data_pipeline\__pycache__
+data_pipeline/__pycache__
 #venv
 cali_data_venv/
 #data
-data/restaurant_inspections_2012_2019.csv
-data/restaurant_map.geojson
+# data/
 # node
 node_modules
 # linter settings

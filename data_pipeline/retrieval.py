@@ -25,4 +25,10 @@ def get_lat_long(df: pd.DataFrame) -> list:
 def get_city(df: pd.DataFrame) -> pd.Series:
     """Get the city of a restaurant from its address"""
     cities: pd.Series = df['address'].apply(lambda x: x.split(', ')[0].split()[-1])
-    return cities.apply(lambda x: x.replace("CITY", "UNION CITY").replace("LEANDRO", "SAN LEANDRO"))
+    return cities.apply(
+        lambda x: x
+        .replace("CITY", "UNION CITY")
+        .replace("LEANDRO", "SAN LEANDRO")
+        .replace("VALLEY", "CASTRO VALLEY")
+        .replace("LORENZO", "SAN LORENZO")
+        )
