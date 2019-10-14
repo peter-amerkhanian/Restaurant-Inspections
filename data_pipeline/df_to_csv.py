@@ -11,7 +11,7 @@ csv_file: str = "data/restaurant_inspections_2012_2019.csv"
 def to_csv() -> None:
     """retrieves raw restaurant data, retrieves Point data for each restaurant, saves a csv"""
     df: pd.DataFrame = json_to_df(url)
-    df = df.head(150)  # testing
+    # df = df.head(150)  # testing
     # initial changes to the df
     df['activity_date'] = df['activity_date'].apply(
         lambda x: datetime.strptime(x.split('T')[0], "%Y-%m-%d"))
@@ -36,4 +36,4 @@ def to_csv() -> None:
             nans = new_nans
         print("\n")
     print("Dataframe updated. {} NaN values in the Points columns.".format(nans))
-    # df.to_csv(csv_file)
+    df.to_csv(csv_file)

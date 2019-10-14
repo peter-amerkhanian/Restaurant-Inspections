@@ -2,6 +2,7 @@ from typing import Dict, Iterator, List, Optional
 
 import geopy
 import pandas as pd
+import numpy as np
 from geopy.point import Point
 
 geopy.geocoders.options.default_user_agent = "alameda county health"
@@ -38,9 +39,7 @@ def gen_coordinates(df: pd.DataFrame) -> Iterator[Optional[Point]]:
     for index, row in df.iterrows():
         if index % 100 == 0:
             print("{}% complete...".format(int(100*(index / len(df.index)))))
-        if row['point']:
-            yield None
-        else:
+        if pd.isnull(row['point']):
             x: List[str] = row['address'].split(f"{row['city']}, ")
             street: str = x[0]
             city: str = row['city']
@@ -54,17 +53,17 @@ def gen_coordinates(df: pd.DataFrame) -> Iterator[Optional[Point]]:
                 yield coord.point
             else:
                 yield None
+        else:
+            yield None
 
 
 def gen_integrated_coordinates(coords: Iterator[Optional[Point]], df: pd.DataFrame) -> Iterator[Optional[Point]]:
     """Step 2: Generate Point data that is either already in the df or was retrieved with gen_coordinates."""
     for df_c, c in zip(df.point, coords):
-        if df_c:
-            yield df_c
-        elif c:
+        if pd.isnull(df_c):
             yield c
         else:
-            yield None
+            yield df_c
 
 
 def build_integrated_coordinate_series(df: pd.DataFrame) -> pd.Series:

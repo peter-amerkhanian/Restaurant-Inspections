@@ -6,7 +6,7 @@ data_pipeline/__pycache__
 #venv
 cali_data_venv/
 #data
-# data/
+data/
 # node
 node_modules
 # linter settings
