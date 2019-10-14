@@ -1,11 +1,19 @@
 #map {
-    height: 450px;
+    height: 580px;
     width: 100%;
     display: inline-block;
+    z-index:1;
+}
+@media screen and (max-width: 568px) { /* the iphone 5 cutoff */
+    #map {
+        height: 500px;
+        width: 100%;
+        display: inline-block;
+    }
 }
 
 .map-container {
-    margin: 0px 50px 0px 50px;
+    margin: 0px 90px 0px 90px;
 }
 @media screen and (max-width: 767px) { /* the ipad is the cutoff */
     .map-container {
@@ -26,10 +34,62 @@
 
 
 html, body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background: linear-gradient( #ffffff, #ecfeff);
     height: 80%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     text-align: center;
 }
+
+button {
+    background: #2471ff;
+    padding: 15px 32px;
+    border: none;
+    font-size: 16px;
+    color: #ffffff;
+    border-radius: 5px;
+}
+button:hover {
+    background: #7c9fff;
+    cursor: pointer;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index:2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%; /* Could be more or less, depending on screen size */
+    animation-name: animatetop;
+    animation-duration: 0.3s;
+  }
+  @keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+  }
+
+  .close {
+    color: #aaa;
+    float: center;
+    font-size: 38px;
+    font-weight: bold;
+  }
+
+  .close:hover {
+      cursor: pointer;
+      color: #000000;
+  }

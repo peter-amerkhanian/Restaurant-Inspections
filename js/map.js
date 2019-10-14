@@ -79,12 +79,12 @@ function initmap() {
 	// set up the map
 	const map = new L.Map('map');
 	// Bay Area
-	map.setView([37.765205, -122.241638], 10);
+	map.setView([37.675205, -122.141638], 10);
 	// create the OSM tile
 	const osm = baseLayer();
-	osm.addTo(map);
 	// create the markers tile
 	const gjLayer = geojsonLayer();
+	osm.addTo(map);
 	gjLayer.addTo(map);
 }
 

@@ -17,14 +17,23 @@
 </head>
 
 <body>
+
     <h2 id="header">Alameda County <br />Restaurant Inspections</h2>
     <div class="map-container">
         <div id="map"></div>
     </div>
-    <div>Zoom</div>
-    <div>Help</div>
-    <script src="js/map.js"></script>
+    <button>Zoom</button>
+    <button id="modal">Help</button>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+        </div>
+    </div>
+
     <script src="js/dom.js"></script>
+    <script src="js/map.js"></script>
 </body>
 
 </html>
