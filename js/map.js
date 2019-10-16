@@ -14,7 +14,7 @@ function baseLayer() {
 
 const LeafIcon = L.Icon.extend({
   options: {
-    iconSize: [24, 24] // size of the icon
+    iconSize: [16, 16] // size of the icon
   }
 });
 
