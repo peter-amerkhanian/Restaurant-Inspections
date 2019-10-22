@@ -5,7 +5,7 @@ import os
 TODO: Add more information to each feature on the map
 """
 
-if os.path.exists('csv_file'):
+if os.path.exists(csv_file):
     to_geojson()
 else:
     print("You don't have the restaurant data loaded. Do you want to load data now?")

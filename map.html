@@ -22,6 +22,7 @@
 
     <h2 id="header">Alameda County <br />Restaurant Inspections</h2>
     <div class="map-container">
+        <div id="searchBox"></div>
         <div id="map"></div>
     </div>
     <button>Zoom</button>
@@ -30,7 +31,19 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
+            <p>For more information on Alameda County's Restaurant 
+                grading policies, please see this 
+                <a target="_blank" href="https://www.acgov.org/aceh/food/gradingfaq.htm">
+                    F.A.Q.</a> or this 
+                <a target="_blank" href="https://www.acgov.org/aceh/documents/placardgradingpolicyprocs-a.pdf">
+                    reviewer's handbook</a> on the Alameda County website.
+            </p>
+            <h4>The different colors on the map mean the following:</h4>
+            <p>
+                <b style="color:green">Green</b>: Score of 80-100 points with no more than one MAJOR CDC risk factor violation which is CORRECTED during inspection.<br/>
+                <b style="color:#d9dd00">Yellow</b>: Score of 75-79 points and/or two or more MAJOR CDC risk factor violations which are CORRECTED during inspection.<br/>
+                <b style="color:red">Red</b>: A score of less than 75 points and/or one or more MAJOR CDC risk factor violation which is NOT CORRECTED during inspection or any Imminent Health Hazard see Cal Code section 114810.
+            </p>
         </div>
     </div>
 

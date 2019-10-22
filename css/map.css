@@ -93,3 +93,7 @@ button:hover {
       cursor: pointer;
       color: #000000;
   }
+
+  #searchBox {
+      display: inline-block;
+  }
