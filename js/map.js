@@ -65,58 +65,23 @@ function geojsonLayer() {
   return geojsonLayer;
 }
 
-// function getViolations(feature) {
-//   const violations = new Map();
-//   violations.set(
-//     "Contaminated Equipment",
-//     Number.parseInt(feature.properties.major_violation_contaminated_equipment)
-//   );
-//   violations.set(
-//     "Contaminated Equipment",
-//     Number.parseInt(feature.properties.major_violation_contaminated_equipment)
-//   );
-//   violations.set(
-//     "Unsafe Food Source",
-//     Number.parseInt(feature.properties.major_violation_unsafe_food_source)
-//   );
-//   violations.set(
-//     "Improper Holding Temperature",
-//     Number.parseInt(
-//       feature.properties.major_violation_improper_holding_temperature
-//     )
-//   );
-//   violations.set(
-//     "Inadequate Cooking",
-//     Number.parseInt(feature.properties.major_violation_inadequate_cooking)
-//   );
-//   violations.set(
-//     "Personal Hygiene",
-//     Number.parseInt(feature.properties.major_violation_personal_hygiene)
-//   );
-//   return violations;
-// }
 
 function berkeleyGeoJson() {
-  const geojsonLayer = new L.GeoJSON.AJAX(
-    "https://data.cityofberkeley.info/resource/iuea-7eac.geojson",
+  const geojsonLayer = new L.GeoJSON.AJAX("data/berkeley_restaurant_map.geojson",
     {
       onEachFeature: function(feature, layer) {
         layer.setIcon(
           new LeafIcon({ iconUrl: "../images/white-circle_26aa.png" })
         );
-        // const date = feature.properties.inspection_date.split("T")[0];
-        // const violations = getViolations(feature);
-        // console.log(violations);
-        // let violationMessage = "";
-        // for (var [key, value] of violations) {
-        //   if (value >= 1) {
-        //     const message = `${key}: ${value}<br/>`;
-        //     violationMessage.concat(message);
-        //   }
-        // }
+        let date;
+        if (feature.properties.inspection_date) {
+          date = feature.properties.inspection_date.split("T")[0]
+        } else {
+          date = feature.properties.inspection_date;
+        }
         layer.bindPopup(`
           <b>${feature.properties.doing_business_as}</b><br/>
-          ${feature.properties.inspection_date}<br/>
+          ${date}<br/>
           `);
       }
     }
