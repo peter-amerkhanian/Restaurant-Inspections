@@ -1,18 +1,12 @@
-.vscode/
 # py caches
 .mypy_cache/
 __pycache__/
 data_pipeline/__pycache__
 #venv
 cali_data_venv/
-#data
-data/
 # node
 node_modules
-# linter settings
-js/.eslintrc.js
 # js and ts configs
 tsconfig.json
 package.json
-# misc
-js/practice.ts
+package-lock.json
