@@ -1,9 +1,9 @@
 import os
-import pandas as pd
-from geopy.point import Point
-import geojson
 from typing import Iterator
 
+import geojson
+import pandas as pd
+from geopy.point import Point
 
 csv_file: str = "data/restaurant_inspections_2012_2019.csv"
 map_file: str = "data/restaurant_map.geojson"

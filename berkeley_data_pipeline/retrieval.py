@@ -1,8 +1,8 @@
-
 import json
+from typing import List
+
 import pandas as pd
 import requests
-from typing import List
 
 url: str = "https://data.cityofberkeley.info/resource/iuea-7eac.geojson"
 
