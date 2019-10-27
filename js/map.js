@@ -22,17 +22,32 @@ const LeafIcon = L.Icon.extend({
  *Sets the color of a feature according to its grade
  *
  * @param {*} feature a geojson feature
+ * @param {*} source a string with 'ac' or 'berkeley'
  * @returns a new LeafIcon witht the colo corresponding to the grade
  */
-function setColor(feature) {
-  if (feature.properties.grade == "g") {
-    return new LeafIcon({ iconUrl: "../images/green-circle_1f7e2.png" });
-  } else if (feature.properties.grade == "y") {
-    return new LeafIcon({ iconUrl: "../images/yellow-circle_1f7e1.png" });
-  } else if (feature.properties.grade == "r") {
-    return new LeafIcon({ iconUrl: "../images/red-circle_1f534.png" });
-  } else {
-    return new LeafIcon({ iconUrl: "../images/white-circle_26aa.png" });
+function setColor(feature, source) {
+  if (source == "ac") {
+    if (feature.properties.grade == "g") {
+      return new LeafIcon({ iconUrl: "../images/green-circle_1f7e2.png" });
+    } else if (feature.properties.grade == "y") {
+      return new LeafIcon({ iconUrl: "../images/yellow-circle_1f7e1.png" });
+    } else if (feature.properties.grade == "r") {
+      return new LeafIcon({ iconUrl: "../images/red-circle_1f534.png" });
+    } else {
+      return new LeafIcon({ iconUrl: "../images/white-circle_26aa.png" });
+    }
+  }
+  else if (source == "berkeley") {
+    if (feature.properties.major_violations > 0) {
+      return new LeafIcon({ iconUrl: "../images/red-circle_1f534.png" });
+    } else if (feature.properties.minor_violations > 0) {
+      return new LeafIcon({ iconUrl: "../images/yellow-circle_1f7e1.png" });
+    } else {
+      return new LeafIcon({ iconUrl: "../images/green-circle_1f7e2.png" });
+    }
+  }
+  else {
+    console.log("Error in color setting - source must be 'ac' or 'berkeley'");
   }
 }
 
@@ -45,7 +60,7 @@ function geojsonLayer() {
   const geojsonLayer = new L.GeoJSON.AJAX("data/restaurant_map.geojson", {
     onEachFeature: function(feature, layer) {
       if (layer instanceof L.Marker) {
-        layer.setIcon(setColor(feature));
+        layer.setIcon(setColor(feature, "ac"));
       }
       const grade = feature.properties.grade;
       let message;
@@ -65,23 +80,25 @@ function geojsonLayer() {
   return geojsonLayer;
 }
 
-
 function berkeleyGeoJson() {
-  const geojsonLayer = new L.GeoJSON.AJAX("data/berkeley_restaurant_map.geojson",
+  const geojsonLayer = new L.GeoJSON.AJAX(
+    "data/berkeley_restaurant_map.geojson",
     {
       onEachFeature: function(feature, layer) {
-        layer.setIcon(
-          new LeafIcon({ iconUrl: "../images/white-circle_26aa.png" })
-        );
+        if (layer instanceof L.Marker) {
+          layer.setIcon(setColor(feature, "berkeley"));
+        }
         let date;
         if (feature.properties.inspection_date) {
-          date = feature.properties.inspection_date.split("T")[0]
+          date = feature.properties.inspection_date.split("T")[0];
         } else {
           date = feature.properties.inspection_date;
         }
         layer.bindPopup(`
           <b>${feature.properties.doing_business_as}</b><br/>
           ${date}<br/>
+          Major violations: ${feature.properties.major_violations}<br/>
+          Minor violations: ${feature.properties.minor_violations}
           `);
       }
     }
